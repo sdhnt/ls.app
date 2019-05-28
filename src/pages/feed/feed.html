@@ -1,0 +1,60 @@
+<ion-header >
+
+  <ion-navbar text-center>
+    
+    <ion-row class="TopBar">
+          
+      <!-- TOP HEADING -->
+      	
+      <button ion-button icon-only clear (click)="logout()" end>
+          <ion-icon name="side-menu"></ion-icon> 
+          <!-- This is currently a blank icon to keep the text in the center -->
+        </button>
+
+      <ion-title>
+          <span text-color="my-custom-color"> <img height="30"src="../../../assets/imgs/liquidstarlogo.png"> </span>
+      </ion-title>	
+      <button ion-button icon-only clear (click)="logout()" end>
+        <ion-icon name="log-out" class="logoutbtn"></ion-icon>
+      </button>
+    
+ 
+  </ion-row>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+
+<ion-content>
+
+<ion-card>
+      <ion-grid style="width: 75%;">
+          <ion-row class="row-style" color="light">
+            <ion-col col-10 >
+            <ion-input type="text" placeholder="Enter Employee UID for Verification" [(ngModel)]="uid" ></ion-input>
+            </ion-col>
+          </ion-row>
+        
+          <ion-row>
+          
+              <button padding ion-button block round style="margin-top: 10px;" (click)="faceID()" class="uploadButton"> Battery Rental </button>
+            
+          </ion-row>  
+        
+          <ion-row>
+           
+           
+          </ion-row>
+          <ion-row>
+              <button padding ion-button block round style="margin-top: 10px;" (click)="register()" class="uploadButton"> OnBoard New User </button>
+            </ion-row>
+        </ion-grid>
+      
+
+  </ion-card>
+
+
+
+</ion-content>

@@ -1,0 +1,44 @@
+page-login {
+
+ion-content{
+	
+
+	.scroll-content{
+	background-image: url("…/../../../assets/imgs/bckground.jpg") ;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+	}	
+}
+
+ion-input{
+	text-align: center;
+}
+
+.nametop{
+	font-family: Monoton;
+	margin-top: 6rem;
+	margin-bottom:2rem;
+	font-size: 2em;
+}
+h1,h6 {
+	
+	font-size: 1em;
+	}
+
+.icon{
+	display: flex!important;
+	align-content: center!important;
+	align-items: center!important;
+
+}
+
+.row-style{
+	background-color: #FFF;
+	padding-left:15px;
+	border-radius: 30px;
+	margin-bottom: 10px;
+}
+
+}

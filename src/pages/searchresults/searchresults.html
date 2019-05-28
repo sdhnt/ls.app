@@ -1,0 +1,124 @@
+<!--
+  Generated template for the SearchresultsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header >
+
+    <ion-navbar text-center>
+      
+      <ion-row class="TopBar">
+            
+        <!-- TOP HEADING -->
+          
+        <button ion-button icon-only clear (click)="logout()" end>
+            <ion-icon name="side-menu"></ion-icon> 
+            <!-- This is currently a blank icon to keep the text in the center -->
+          </button>
+  
+        <ion-title>
+            <span text-color="my-custom-color"> Verch </span>
+        </ion-title>	
+        <button ion-button icon-only clear (click)="logout()" end>
+          <ion-icon name="log-out" class="logoutbtn"></ion-icon>
+        </button>
+      
+   
+    </ion-row>
+  
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  
+  <ion-content>
+  
+      <ion-grid style="width: 75%;">
+        <ion-col style ="width: 75%;"></ion-col>
+      <ion-searchbar showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
+      <button padding ion-button block round style="margin-top: 10px;" (click)="searchResults()" class="uploadButton"> Search </button>
+      </ion-grid>
+  
+    <ion-card padding>
+
+    <ion-grid>
+      <ion-row>
+      
+          <ion-col col-2><img class="circle-pic" src="https://www.w3schools.com/w3css/img_avatar5.png" /></ion-col>
+          <ion-col>
+          <button ion-button block clear class="nametop" (click)="personalResult()">Ching Wen Yong</button> 
+        </ion-col>
+      
+      </ion-row>
+      <ion-row>
+      
+          <ion-col><i></i>Welder | Ghaziabad, India | 6 contracts | 😄 </ion-col>
+
+      </ion-row>
+    </ion-grid>
+    </ion-card>
+
+    <ion-card padding>
+
+        <ion-grid>
+          <ion-row>
+          
+              <ion-col col-2><img class="circle-pic" src="https://www.w3schools.com/w3css/img_avatar3.png" /></ion-col>
+              <ion-col>
+              <button ion-button block clear class="nametop" (click)="personalResult()">Rajesh Kapali</button> 
+            </ion-col>
+          
+          </ion-row>
+          <ion-row>
+          
+              <ion-col><i></i> Painter | Ghaziabad, India | 4 contracts | ☹️ </ion-col>
+    
+          </ion-row>
+        </ion-grid>
+        </ion-card>
+
+        <ion-card padding>
+
+            <ion-grid>
+              <ion-row>
+              
+                  <ion-col col-2><img class="circle-pic" src="https://www.w3schools.com/w3css/img_avatar2.png" /></ion-col>
+                  <ion-col>
+                  <button ion-button block clear class="nametop" (click)="personalResult()">Suchir Mitthal</button> 
+                </ion-col>
+              
+              </ion-row>
+              <ion-row>
+              
+                  <ion-col><i></i> Machining | Jigani, India | 6 contracts | 🤐 </ion-col>
+        
+              </ion-row>
+            </ion-grid>
+            </ion-card>
+
+            <ion-card padding>
+
+                <ion-grid>
+                  <ion-row>
+                  
+                      <ion-col col-2><img class="circle-pic" src="https://www.w3schools.com/w3css/img_avatar1.png" /></ion-col>
+                      <ion-col>
+                      <button ion-button block clear class="nametop" (click)="personalResult()">Vishal Patel</button> 
+                    </ion-col>
+                  
+                  </ion-row>
+                  <ion-row>
+                  
+                      <ion-col><i></i>Woodwork | Jigani, India | 6 contracts | 😁 </ion-col>
+            
+                  </ion-row>
+                </ion-grid>
+                </ion-card>
+    
+  
+
+
+
+</ion-content>

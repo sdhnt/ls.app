@@ -1,0 +1,176 @@
+<!--
+  Generated template for the FaceidPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header >
+
+  <ion-navbar text-center>
+    
+    <ion-row class="TopBar">
+          
+      <!-- TOP HEADING -->
+      	
+      <button ion-button icon-only clear (click)="logout()" end>
+          <ion-icon name="side-menu"></ion-icon> 
+          <!-- This is currently a blank icon to keep the text in the center -->
+        </button>
+
+      <ion-title>
+          <span text-color="my-custom-color"> <img height="30"src="../../../assets/imgs/liquidstarlogo.png"> </span>
+      </ion-title>	
+      <button ion-button icon-only clear (click)="logout()" end>
+        <ion-icon name="log-out" class="logoutbtn"></ion-icon>
+      </button> 
+    
+ 
+  </ion-row>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+
+<ion-content padding>
+
+    <ion-card padding>
+
+        <ion-grid style="width: 75%;">
+            
+          <div class="photo" [ngStyle]="{'background': 'url(' + image + ')'}">
+                {{ image ? "" : "No Photo Taken"}}
+          </div>
+
+          
+          
+          <button round ion-button full (tap)="analyzeFace()" class="uploadButton">Face-Photograph</button>
+        
+          <!-- <ion-spinner *ngIf="loading" name="crescent"></ion-spinner> -->
+          <div *ngIf="error" class="error">
+                {{ error }}
+          </div>
+          <div *ngIf="!loading && analysis?.length > 0" class="analysis">
+                <h1>Analysis</h1>
+                <div *ngFor="let an of analysis" class="subanalysis">
+                      <h2>{{an?.feature}}</h2>
+                      <p>{{an?.value}}</p>
+                </div>
+          </div>
+
+            
+            <!-- <ion-row>
+                <button padding ion-button block round style="margin-top: 10px;" (click)="viewprofile()" class="uploadButton"> Verify </button>
+              </ion-row> -->
+
+              <ion-row>
+                <ion-item>
+                  <ion-label color="dark">
+                    Name:
+                  </ion-label>
+                  <ion-input type="text" placeholder="Enter Name" [(ngModel)]="name"></ion-input>
+                </ion-item>
+              </ion-row>
+
+
+
+              <ion-row>
+                <ion-item>
+                  <ion-label color="dark" >
+                    Phone Number:
+                  </ion-label>
+                  <ion-input type="number" placeholder="+918 4837593950" [(ngModel)]="phnum"></ion-input>
+                </ion-item>
+              </ion-row>
+
+              
+              
+              <ion-row>
+                <ion-item>
+                  <ion-label color="dark">
+                    Location:
+                  </ion-label  >
+                  <ion-input type="text" placeholder="125, Kampala Main Road, Straight and left from main signal" [(ngModel)]="location"></ion-input>
+                </ion-item>
+              </ion-row>
+
+              <ion-row>
+                <button round ion-button full (tap)="takePhoto()" class="uploadButton">ID-Photograph</button>
+              </ion-row>
+
+              
+
+
+              
+
+
+              <ion-row>
+                <button round ion-button full (tap)="takePhoto()" class="uploadButton">Job-Img</button>
+              </ion-row>
+
+
+
+
+              
+              <ion-row>
+                <ion-item>
+                  <ion-label color="dark">
+                    How do you get electricity?
+                  </ion-label>
+                  <ion-select multiple="true"  [(ngModel)]="currentelec">
+                    <ion-option value="bird" selected>Solar</ion-option>
+                    <ion-option value="cat">Grid</ion-option>
+                    <ion-option value="dog" selected>Battery</ion-option>
+                    <ion-option value="honeybadger">Generator</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-row>
+
+              <ion-row>
+                <ion-item>
+                  <ion-label color="dark">
+                   What do you use electricity for?
+                  </ion-label>
+                  <ion-select multiple="true"  [(ngModel)]="usefor">
+                    <ion-option value="bird" selected>Lights</ion-option>
+                    <ion-option value="cat">TV</ion-option>
+                    <ion-option value="dog" selected>Washing Machine</ion-option>
+                    <ion-option value="honeybadger">Mobile Charging</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-row>
+
+              <ion-row>
+                <ion-item>
+                  <ion-label color="dark">
+                   Daily Spending:
+                  </ion-label>
+                  <ion-input type="number" placeholder="19"  [(ngModel)]="dailysped" ></ion-input>
+                </ion-item>
+              </ion-row>
+
+
+              <ion-row>
+                <ion-item>
+                  <ion-label color="dark">
+                   Would you use a portable battery?
+                  </ion-label>
+                  <ion-select  [(ngModel)]="usebatt">
+                    <ion-option value="bird" selected>Yes</ion-option>
+                    <ion-option value="cat">No</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-row>
+
+              
+                
+          </ion-grid>
+
+      </ion-card>
+
+      <ion-row>
+        <button round ion-button full (tap)="createRecord()" class="uploadButton">Create Record</button>
+      </ion-row>
+
+</ion-content>
