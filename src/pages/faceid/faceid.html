@@ -40,12 +40,12 @@
         <ion-grid style="width: 75%;">
             
           <div class="photo" [ngStyle]="{'background': 'url(' + image + ')'}">
-                {{ image ? "" : "No Photo Taken"}}
+                {{ imageface ? "" : "No Photo Taken"}}
           </div>
 
           
           
-          <button round ion-button full (tap)="analyzeFace()" class="uploadButton">Face-Photograph</button>
+          <button round ion-button full (tap)="takePhotoFace()" class="uploadButton">Face-Photograph</button>
         
           <!-- <ion-spinner *ngIf="loading" name="crescent"></ion-spinner> -->
           <div *ngIf="error" class="error">
@@ -96,8 +96,12 @@
               </ion-row>
 
               <ion-row>
-                <button round ion-button full (tap)="takePhoto()" class="uploadButton">ID-Photograph</button>
+                <button round ion-button full (tap)="takePhotoID()" class="uploadButton">ID-Photograph</button>
               </ion-row>
+
+              <div class="photo" [ngStyle]="{'background': 'url(' + image + ')'}">
+                {{ imageID ? "" : "No Photo Taken"}}
+          </div>
 
               
 
@@ -106,8 +110,12 @@
 
 
               <ion-row>
-                <button round ion-button full (tap)="takePhoto()" class="uploadButton">Job-Img</button>
+                <button round ion-button full (tap)="takePhotoJob()" class="uploadButton">Job-Img</button>
               </ion-row>
+
+              <div class="photo" [ngStyle]="{'background': 'url(' + image + ')'}">
+                {{ imageJob ? "" : "No Photo Taken"}}
+          </div>
 
 
 
@@ -119,10 +127,10 @@
                     How do you get electricity?
                   </ion-label>
                   <ion-select multiple="true"  [(ngModel)]="currentelec">
-                    <ion-option value="bird" selected>Solar</ion-option>
-                    <ion-option value="cat">Grid</ion-option>
-                    <ion-option value="dog" selected>Battery</ion-option>
-                    <ion-option value="honeybadger">Generator</ion-option>
+                    <ion-option value="Solar" selected>Solar</ion-option>
+                    <ion-option value="Grid">Grid</ion-option>
+                    <ion-option value="Battery" selected>Battery</ion-option>
+                    <ion-option value="Generator">Generator</ion-option>
                   </ion-select>
                 </ion-item>
               </ion-row>
@@ -133,10 +141,10 @@
                    What do you use electricity for?
                   </ion-label>
                   <ion-select multiple="true"  [(ngModel)]="usefor">
-                    <ion-option value="bird" selected>Lights</ion-option>
-                    <ion-option value="cat">TV</ion-option>
-                    <ion-option value="dog" selected>Washing Machine</ion-option>
-                    <ion-option value="honeybadger">Mobile Charging</ion-option>
+                    <ion-option value="Lights" selected>Lights</ion-option>
+                    <ion-option value="TV">TV</ion-option>
+                    <ion-option value="Washing Machine" selected>Washing Machine</ion-option>
+                    <ion-option value="Mobile Charging">Mobile Charging</ion-option>
                   </ion-select>
                 </ion-item>
               </ion-row>
@@ -157,8 +165,8 @@
                    Would you use a portable battery?
                   </ion-label>
                   <ion-select  [(ngModel)]="usebatt">
-                    <ion-option value="bird" selected>Yes</ion-option>
-                    <ion-option value="cat">No</ion-option>
+                    <ion-option value="Yes" selected>Yes</ion-option>
+                    <ion-option value="No">No</ion-option>
                   </ion-select>
                 </ion-item>
               </ion-row>
