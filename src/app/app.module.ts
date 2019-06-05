@@ -23,24 +23,24 @@ import { SearchresultsPage } from '../pages/searchresults/searchresults';
 import { IndHisPage } from '../pages/ind-his/ind-his';
 
 
-// var config = {
-//     apiKey: "AIzaSyADjIbI3_GRS4eRHGVGFsT2hrkKvH9K06M",
-//     authDomain: "trialapp-1cb3d.firebaseapp.com",
-//     databaseURL: "https://trialapp-1cb3d.firebaseio.com",
-//     projectId: "trialapp-1cb3d",
-//     storageBucket: "trialapp-1cb3d.appspot.com",
-//     messagingSenderId: "591467524421"
-//   };
-
 var config = {
-  apiKey: "AIzaSyDBlHvhFw8AjkX9ccgM_nTxcFF73o9H5b4",
-  authDomain: "liquid-star-mobile-onboard.firebaseapp.com",
-  databaseURL: "https://liquid-star-mobile-onboard.firebaseio.com",
-  projectId: "liquid-star-mobile-onboard",
-  storageBucket: "liquid-star-mobile-onboard.appspot.com",
-  messagingSenderId: "455491584209",
-  appId: "1:455491584209:web:e619159f4ce57acd"
-};
+    apiKey: "AIzaSyADjIbI3_GRS4eRHGVGFsT2hrkKvH9K06M",
+    authDomain: "trialapp-1cb3d.firebaseapp.com",
+    databaseURL: "https://trialapp-1cb3d.firebaseio.com",
+    projectId: "trialapp-1cb3d",
+    storageBucket: "trialapp-1cb3d.appspot.com",
+    messagingSenderId: "591467524421"
+  };
+
+// var config = {
+//   apiKey: "AIzaSyDBlHvhFw8AjkX9ccgM_nTxcFF73o9H5b4",
+//   authDomain: "liquid-star-mobile-onboard.firebaseapp.com",
+//   databaseURL: "https://liquid-star-mobile-onboard.firebaseio.com",
+//   projectId: "liquid-star-mobile-onboard",
+//   storageBucket: "liquid-star-mobile-onboard.appspot.com",
+//   messagingSenderId: "455491584209",
+//   appId: "1:455491584209:web:e619159f4ce57acd"
+// };
 
 firebase.initializeApp(config);
 firebase.firestore().settings({

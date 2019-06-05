@@ -100,21 +100,22 @@ export class FeedPage {
   }
 
     register(){
-
-      this.faceID();
-
-    }
-
-    faceID(){
-      console.log(this.uid);
       if(this.uid == "527158"){
-      this.navCtrl.push(FaceidPage);}
+      this.navCtrl.push(SearchresultsPage);}
       else{
         this.toastCtrl.create({
           message: "Employee ID not found. Please Register.",
           duration: 3000
         }).present();
       }
+
+    }
+
+    faceID(){
+      console.log(this.uid);
+      
+      this.navCtrl.push(FaceidPage);
+      
 
 
     }

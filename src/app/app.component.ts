@@ -7,6 +7,7 @@ import { LoginPage } from '../pages/login/login';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { FeedPage } from '../pages/feed/feed';
 import { FaceidPage } from '../pages/faceid/faceid';
+import { ReceiverPage } from '../pages/receiver/receiver';
 @Component({
   templateUrl: 'app.html'
 })

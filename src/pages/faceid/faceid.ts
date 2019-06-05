@@ -58,8 +58,6 @@ export class FaceidPage {
       this.navCtrl.push(IndHisPage);
 
   }
-
-
  
 
   

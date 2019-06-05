@@ -1,27 +1,80 @@
-<!--
-  Generated template for the ReceiverPage page.
+<ion-header >
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-  <ion-navbar>
-      <!-- <button padding ion-button block round outline color="dark" style="margin-top: 20px;" (click)="subscribe_location()"> Receiver </button> -->
+  <ion-navbar text-center>
+    
+    <ion-row class="TopBar">
+          
+      <!-- TOP HEADING -->
+      	
+      <button ion-button icon-only clear (click)="logout()" end>
+          <ion-icon name="side-menu"></ion-icon> 
+          <!-- This is currently a blank icon to keep the text in the center -->
+        </button>
+
+      <ion-title>
+          <span text-color="my-custom-color"> <img height="30"src="../../../assets/imgs/liquidstarlogo.png"> </span>
+      </ion-title>	
+      <button ion-button icon-only clear (click)="logout()" end>
+        <ion-icon name="log-out" class="logoutbtn"></ion-icon>
+      </button>
+    
+ 
+  </ion-row>
+
   </ion-navbar>
-</ion-header> 
+
+</ion-header>
 
 
-<ion-content padding>
-    
 
-    <ion-slides *ngIf="retrieved_images.length > 0" autoplay="5000" loop="true" speed="3000">
-      <ion-slide *ngFor="let slide of retrieved_images" >
-        <img [src]="slide" alt="">  
-      </ion-slide>
-    </ion-slides>
-    
-    <ion-item>
-      <ion-label>Loading Images</ion-label>
-      </ion-item>
+<ion-content>
+
+<ion-card>
+      <ion-grid style="width: 75%;">
+          <!-- <ion-row class="row-style" color="light">
+            <ion-col col-10 >
+            <ion-input type="text" placeholder="Enter Employee UID for Verification" [(ngModel)]="uid" ></ion-input>
+            </ion-col>
+          </ion-row> -->
+        
+          <ion-row>
+          
+           <button padding ion-button block round style="margin-top: 10px;" (click)="takePhoto()" class="uploadButton"> Scan QR Code </button>
+           {{ imageface ? "QRCode Scanned!" : "No Photo Taken"}}
+          </ion-row>
+           
+          
+        
+       
+           
+           
+        </ion-grid>
+      
+
+
+  
+  <ion-item>
+    <ion-label color="dark">
+      Select Battery Size
+    </ion-label>
+    <ion-select multiple="false">
+      <ion-option value="Solar" selected>Small</ion-option>
+      <ion-option value="Grid">Medium</ion-option>
+      <ion-option value="Battery">Large</ion-option>
+      <ion-option value="Generator">Mega</ion-option>
+    </ion-select>
+  </ion-item>
+
+<ion-grid style="width: 75%;">
+<button padding ion-button block round style="margin-top: 10px;" (click)="nextpg()" class="uploadButton"> Confirm Rental </button>
+</ion-grid>
+
+
+
+
+
+
+</ion-card>
+
 
 </ion-content>
