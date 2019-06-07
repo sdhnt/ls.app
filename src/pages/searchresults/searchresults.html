@@ -40,17 +40,31 @@
           <ion-row>
           
            <button padding ion-button block round style="margin-top: 10px;" (click)="takePhoto()" class="uploadButton"> FaceID </button>
-           {{ imageface ? "Face Match!" : "No Photo Taken"}}
+           {{ imageface ? "Photograph Taken" : "No Photo Taken"}}
 
-           <img [src]="imageface">
+          </ion-row>
 
-           <button padding ion-button block round style="margin-top: 10px;" (click)="nextpg()" class="uploadButton"> Next </button>
+          <ion-row>
 
-          
-      
-          
+            <button *ngIf="flag==1" padding ion-button block round style="margin-top: 5px;" class="uploadButton1"> No Face Found!</button>
            
+            <button *ngIf="isIdentical!=null" padding ion-button block round style="margin-top: 5px;" class="uploadButton1"> Match: {{isIdentical}} </button>
+            
+            <button *ngIf="confidence!=null" padding ion-button block round style="margin-top: 5px;" class="uploadButton1"> Confidence: {{confidence}} </button>
+           
+          </ion-row>
 
+          <ion-row>
+
+           <img *ngIf="imageface!=null" [src]="imageface" style="width: 100px;">
+
+          </ion-row>
+
+          
+
+          <ion-row>
+
+           <button *ngIf="imageface!=null" padding ion-button block round style="margin-top: 10px;" (click)="nextpg()" class="uploadButton"> Next </button>
           </ion-row>  
         
        
