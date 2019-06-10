@@ -15,6 +15,7 @@ import { P } from '@angular/core/src/render3';
 import { SlideshowComponent } from 'ng-simple-slideshow/src/app/modules/slideshow/slideshow.component';
 import { FaceidPage } from '../faceid/faceid';
 import { SearchresultsPage } from '../searchresults/searchresults';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 // import {cors} from 'cors';
 
 // const cors = require('cors')({origin: true});
@@ -44,9 +45,9 @@ export class FeedPage {
   
   constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl: LoadingController, 
     public toastCtrl: ToastController, private camera: Camera, private imagePicker: ImagePicker, private geolocation: Geolocation) {
-      this.get_all_locations().then(()=>{
-        console.log("Locations loaded");        
-      });      
+      // this.get_all_locations().then(()=>{
+      //   console.log("Locations loaded");        
+      // });      
   }
 
   // Set up all locations from DB
@@ -100,14 +101,27 @@ export class FeedPage {
   }
 
     register(){
-      if(this.uid == "527158"){
-      this.navCtrl.push(SearchresultsPage);}
-      else{
-        this.toastCtrl.create({
-          message: "Employee ID not found. Please Register.",
-          duration: 3000
-        }).present();
-      }
+
+      var Ref = firebase.firestore().collection("lscr").doc(this.uid);
+
+      Ref.get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data().imageface_url);
+            this.navCtrl.push(SearchresultsPage,{
+              docid : this.uid,
+            });
+                    
+        } else {
+            // doc.data() will be undefined in this case
+            //console.log("No such document!");
+            this.toastCtrl.create({
+                   message: "Employee ID not found. Please Register.",
+                   duration: 3000,
+                 }).present();
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
 
     }
 

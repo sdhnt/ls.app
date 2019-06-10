@@ -21,13 +21,16 @@ declare var require: any
   templateUrl: 'searchresults.html',
 })
 export class SearchresultsPage {
-
+  uid;
   constructor(public navCtrl: NavController, public navParams: NavParams, private camera: Camera, public toastCtrl: ToastController, private zone: NgZone) {
-  }
+    this.uid = navParams.get('docid');
 
+  }
 
   confidence: any;
   isIdentical: any;
+  imageface_url: any;
+  temp: any;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchresultsPage');
@@ -82,22 +85,23 @@ export class SearchresultsPage {
   }
 
   nextpg() {
-    //if (this.isIdentical == true) {
-      this.navCtrl.push(ReceiverPage);
-   // }
-    // else {
-    //   this.toastCtrl.create({
-    //     message: "No Match yet! Please try again!",
-    //     duration: 1000
-    //   }).present()
-    // }
+    if (this.isIdentical == 'true') {
+
+    this.navCtrl.push(ReceiverPage);
+    }
+    else {
+      this.toastCtrl.create({
+        message: "No Match yet! Please try again!",
+        duration: 1000
+      }).present()
+    }
   }
 
   mfaceID1: any;
   mfaceID2: any;
 
   public takePhoto(taken: Function = null, notTaken: Function = null): void {
-    this.uploadFaces();
+
     this.camera.getPicture(this.options).then((base64Image) => {
       // For the sake of displaying our image, we have to add a
       // data type to our base64 encoding. We'll snip this out later
@@ -109,33 +113,116 @@ export class SearchresultsPage {
       if (taken != null) taken(base64Image);
 
       this.toastCtrl.create({
-        message: "Face Match!",
-        duration: 3000
+        message: "Please wait while we complete Face ID!",
+        duration: 5000
       }).present()
 
+      this.zone.run(() => {
+        this.temp = "Pic taken"
+      });
+
+      this.upload_new_face(this.uid);
 
     }, (e) => {
       if (notTaken != null) notTaken(e);
     });
+
+
   }
-   flag = 0;
+  flag = 0;
 
 
+  upload_new_face(name: string) {
+    return new Promise((resolve, reject) => {
+
+
+      let ref = firebase.storage().ref("rentalImages/" + name + "face");
+      let uploadTask = ref.putString(this.imageface.split(',')[1], "base64");
+
+      this.zone.run(() => {
+
+        this.temp = "Uploading to server..."
+
+      });
+
+      uploadTask
+        .then(snap => {
+
+          snap.ref.getDownloadURL().then((url) => {
+            // do something with url here
+            this.zone.run(() => {
+              this.imageface_url = url;
+              this.temp = "URL updated! Checking Face ID..."
+              this.uploadFaces();
+            });
+
+          });
+          //return ref.getDownloadURL()
+        })
+
+
+
+      // uploadTask.snapshot.ref.getDownloadURL().then(function(url){
+      //   //
+
+      //   this.zone.run(() => {
+      //     this.temp = " no_url"
+      //   });
+
+      //   this.zone.run(() => {
+      //     this.imageface_url=url;
+      //   });
+
+      //   this.zone.run(() => {
+      //     this.temp = " new_url"
+      //   });
+
+      //   this.uploadFaces();
+
+      // }).catch((err)=>{
+      //   reject
+      // })
+
+      // uploadTask.on("state_changed", function(taskSnapshot){
+      //   //console.log(taskSnapshot);
+      //   this.zone.run(() => {
+      //     this.temp = "Uploaded"
+      //   });
+      // }, function(err){
+      //   //console.log(err);
+      //   this.zone.run(() => {
+      //     this.temp = "Uploaded"
+      //   });
+      // }, function(){
+      //   //console.log("Upload Complete");
+      //   this.zone.run(() => {
+      //     this.temp = "Uploaded"
+      //   });
+      //   this.zone.run(() => {
+      //     this.temp = "Uploaded"
+      //   });
+
+
+
+
+      // })
+    })
+  }
+
+  url2;
   public uploadFaces() {
     var request = require('request');
-    console.log("wodup");
+    //console.log("wodup");
 
-    
+
+
     const subscriptionKey = 'b62d45685ba64c539152b9a8896c26aa';
 
     var uriBase = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect';
 
     const imageUrl1 =
-      "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c05962448.png";
-
-
-    const imageUrl2 =
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80";
+      this.imageface_url;
+    //'https://firebasestorage.googleapis.com/v0/b/trialapp-1cb3d.appspot.com/o/rentalImages%2F527158face?alt=media&token=42cfc27d-63c3-466a-89b1-5928e6a6cf93'
 
     var params = {
       'returnFaceId': 'true',
@@ -166,90 +253,119 @@ export class SearchresultsPage {
         console.log(jsonResponse.length);
 
         if (jsonResponse.length > 0) {
-          this.mfaceID1 = jsonResponse[0].faceId;
+          this.flag = 2; //FACE detected in first image
+          this.mfaceID1 = jsonResponse[0].faceId; // SAVED
           console.log('JSON Response\n');
-          console.log(this.mfaceID1);
-          var options = {
-            uri: uriBase,
-            qs: params,
-            //mode:'no-cors',
-            body: '{"url": ' + '"' + imageUrl2 + '"}',
-            headers: {
-              'Access-Control-Allow-Origin': 'http://localhost:8100/',
-              'Content-Type': 'application/json',
-              'Ocp-Apim-Subscription-Key': subscriptionKey
-            }
-          };
+          console.log(this.mfaceID1); //SHOWN
 
-          request.post(options, (error, response, body) => {
-            if (error) {
-              console.log('Error: ', error);
-              return;
-            }
-          
-            else {
-              let jsonResponse = JSON.parse(body);
-              // console.log('JSON Response\n');
-              // console.log(jsonResponse);
-              if (jsonResponse.length > 0 && this.flag == 0) {
-                this.mfaceID2 = jsonResponse[0].faceId;
-                console.log('JSON Response\n');
-                console.log(this.mfaceID2);
+          this.zone.run(() => { this.temp = "Set FID1..."; });
+          // Now we retrieve URL 2 & post
+          var Ref = firebase.firestore().collection("lscr").doc(this.uid);
+          Ref.get().then((doc) => {
 
+            this.zone.run(() => { this.temp = "Fetching URL..."; });
+            console.log(doc.data().imageface_url)
+            this.url2 = String(doc.data().imageface_url);
+             
 
+         
+            
+              this.zone.run(() => {
 
+              this.temp = "Downloading From Database";
+              const imageUrl2 = this.url2;
+            });
 
+            // PICTURE 2 retrievedONWARDS
 
+            var options = {
+              uri: uriBase,
+              qs: params,
+              //mode:'no-cors',
+              body: '{"url": ' + '"' + this.url2 + '"}',
+              headers: {
+                'Access-Control-Allow-Origin': 'http://localhost:8100/',
+                'Content-Type': 'application/json',
+                'Ocp-Apim-Subscription-Key': subscriptionKey
+              }
+            };
+              // POST PICTURE 2 to Azure and get ID
+            request.post(options, (error, response, body) => {
+              if (error) {
+                console.log('Error: ', error);
+                return;
+              }
 
-                ///////////VERIFY FACE
-                uriBase = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/verify';
-
-                var params1 = {
-
-                };
-
-                this.sleep(1000);
-
-                const options2 = {
-                  uri: uriBase,
-                  qs: params1,
-                  body: '{"faceId1": ' + '"' + String(this.mfaceID1) + '", "faceId2": "' + String(this.mfaceID2) + '"}',
-                  //body: '{"faceId1": ' + '"' + "c924e1af-272b-46c4-a4e1-61b3dd7535bc" + '", "faceId2": "'+ "2e5cdffb-0933-4ee7-a436-26f428fbf211" +'"}',
-
-
-                  //{"faceId1": "this.mfaceID", "faceId2: "this.mfaceID2"
-
-
-                  headers: {
-                    'Access-Control-Allow-Origin': 'http://localhost:8100/',
-                    'Content-Type': 'application/json',
-                    'Ocp-Apim-Subscription-Key': subscriptionKey
-                  }
-                };
-
-
-                request.post(options2, (error, response, body) => {
-                  if (error) {
-                    console.log('Error: ', error);
-                    return;
-                  }
-                  let jsonResponse = JSON.parse(body);
+              else {
+                let jsonResponse = JSON.parse(body);
+                // console.log('JSON Response\n');
+                // console.log(jsonResponse);
+                if (jsonResponse.length > 0) {
+                  this.mfaceID2 = jsonResponse[0].faceId;
                   console.log('JSON Response\n');
-                  console.log(jsonResponse);
+                  console.log(this.mfaceID2);
 
-                  this.zone.run(() => {
-                    this.isIdentical = String(jsonResponse.isIdentical);
-                    this.confidence = String(jsonResponse.confidence);
+
+
+
+
+
+                  ///////////VERIFY FACE
+                  uriBase = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/verify';
+
+                  var params1 = {
+
+                  };
+
+                  this.sleep(1000);
+
+                  const options2 = {
+                    uri: uriBase,
+                    qs: params1,
+                    body: '{"faceId1": ' + '"' + String(this.mfaceID1) + '", "faceId2": "' + String(this.mfaceID2) + '"}',
+                    //body: '{"faceId1": ' + '"' + "c924e1af-272b-46c4-a4e1-61b3dd7535bc" + '", "faceId2": "'+ "2e5cdffb-0933-4ee7-a436-26f428fbf211" +'"}',
+
+
+                    //{"faceId1": "this.mfaceID", "faceId2: "this.mfaceID2"
+
+
+                    headers: {
+                      'Access-Control-Allow-Origin': 'http://localhost:8100/',
+                      'Content-Type': 'application/json',
+                      'Ocp-Apim-Subscription-Key': subscriptionKey
+                    }
+                  };
+
+
+                  request.post(options2, (error, response, body) => {
+                    if (error) {
+                      console.log('Error: ', error);
+                      return;
+                    }
+                    let jsonResponse = JSON.parse(body);
+                    console.log('JSON Response\n');
+                    console.log(jsonResponse);
+
+
+
+
+                    this.zone.run(() => {
+                      this.temp = "Recieving FaceID confirmation";
+
+                      this.isIdentical = String(jsonResponse.isIdentical);
+                      this.confidence = String(jsonResponse.confidence);
+                    });
+
+
+                    //console.log(this.isIdentical);
                   });
 
-
-                  //console.log(this.isIdentical);
-                });
-
+                }
               }
-            }
 
 
+
+            });
 
           });
 
@@ -257,8 +373,11 @@ export class SearchresultsPage {
 
 
 
+
+
+
         }
-        else{
+        else {
           this.zone.run(() => {
             this.flag = 1;
           });

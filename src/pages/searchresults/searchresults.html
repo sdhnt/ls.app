@@ -36,16 +36,33 @@
             <ion-input type="text" placeholder="Enter Employee UID for Verification" [(ngModel)]="uid" ></ion-input>
             </ion-col>
           </ion-row> -->
+          <ion-row>
+            
+            <button padding ion-button clear round style="margin-top: 10px;">UID: {{uid}} </button>
+           
+          </ion-row>
+
+          <ion-row>
+            {{ imageface ? "Ensure Orientation is Correct" : "No Photo"}}
+          </ion-row>
         
           <ion-row>
           
            <button padding ion-button block round style="margin-top: 10px;" (click)="takePhoto()" class="uploadButton"> FaceID </button>
-           {{ imageface ? "Photograph Taken" : "No Photo Taken"}}
+           
+           
+           
+           
 
+          </ion-row>
+          <ion-row>
+           {{temp}}
           </ion-row>
 
           <ion-row>
 
+            <button *ngIf="flag==2" padding ion-button block round style="margin-top: 5px;" class="uploadButton1"> Face Detected!</button>
+           
             <button *ngIf="flag==1" padding ion-button block round style="margin-top: 5px;" class="uploadButton1"> No Face Found!</button>
            
             <button *ngIf="isIdentical!=null" padding ion-button block round style="margin-top: 5px;" class="uploadButton1"> Match: {{isIdentical}} </button>
@@ -54,7 +71,7 @@
            
           </ion-row>
 
-          <ion-row>
+          <ion-row> 
 
            <img *ngIf="imageface!=null" [src]="imageface" style="width: 100px;">
 
