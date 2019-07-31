@@ -51,7 +51,7 @@ export class FaceidPage {
   image: string;
 
   name: string = "";
-  phnum: number;
+  phnum: string = "";
   location: string = "";
   imageface: any;
   imageID: any;
@@ -213,57 +213,72 @@ export class FaceidPage {
   }
 
   createRecord() {
-    firebase
-      .firestore()
-      .collection("lscr")
-      .add({
-        // file_name: this.text,
-        created: firebase.firestore.FieldValue.serverTimestamp(),
-        owner: firebase.auth().currentUser.uid,
-        owner_name: firebase.auth().currentUser.displayName,
-        location: this.location,
-        onboard_name: this.name,
-        ph_num: this.phnum,
-        current_elec: this.currentelec,
-        user_for: this.usefor,
-        daily_spend: this.dailysped,
-        use_bat: this.usebatt
+    const db = firebase.firestore();
+    const batch = db.batch();
 
-        //startDate: this.startDate,
-        // endDate: this.endDate
-      })
-      .then(async doc => {
-        //console.log(doc);
+    // lscr collection used for onboarding
+    const newLscrRef = db.collection("lscr").doc();
 
-        this.toastCtrl
-          .create({
-            message: "Wait for Upload...",
-            duration: 1000
-          })
-          .present();
+    const newCustomerRef = db.collection("customers").doc();
+    const newAccountRef = db.collection("accounts").doc();
 
-        await this.upload_new_face(doc.id);
-        await this.upload_new_ID(doc.id);
-        await this.upload_new_job(doc.id);
+    batch.set(newLscrRef, {
+      created: firebase.firestore.FieldValue.serverTimestamp(),
+      owner: firebase.auth().currentUser.uid,
+      owner_name: firebase.auth().currentUser.displayName,
+      location: this.location,
+      onboard_name: this.name,
+      ph_num: this.phnum,
+      current_elec: this.currentelec,
+      user_for: this.usefor,
+      daily_spend: this.dailysped,
+      use_bat: this.usebatt
+    });
 
-        this.name = "";
-        this.location = "";
-        this.phnum = 0;
-        this.image = "";
-        this.imageID = null;
-        this.imageJob = null;
-        this.imageface = null;
-        this.currentelec = "";
-        this.usefor = "";
-        this.dailysped = 0;
-        this.usebatt = "";
-        this.toastCtrl
-          .create({
-            message: "Submitted!",
-            duration: 3000
-          })
-          .present();
-      });
+    batch.set(newCustomerRef, {
+      fullName: this.name,
+      mobile: this.phnum,
+      address: this.location,
+      verified: false,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    batch.set(newAccountRef, {
+      type: "customer",
+      ownerId: newCustomerRef.id,
+      balance: 0
+    });
+
+    batch.commit().then(async doc => {
+      console.log(doc);
+      this.toastCtrl
+        .create({
+          message: "Wait for Upload...",
+          duration: 1000
+        })
+        .present();
+
+      await this.upload_new_face(doc.id);
+      await this.upload_new_ID(doc.id);
+      await this.upload_new_job(doc.id);
+
+      this.name = "";
+      this.location = "";
+      this.phnum = "";
+      this.image = "";
+      this.imageID = null;
+      this.imageJob = null;
+      this.imageface = null;
+      this.currentelec = "";
+      this.usefor = "";
+      this.dailysped = 0;
+      this.usebatt = "";
+      this.toastCtrl
+        .create({
+          message: "Submitted!",
+          duration: 3000
+        })
+        .present();
+    });
   }
 
   launchGallery() {
