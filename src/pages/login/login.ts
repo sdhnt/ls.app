@@ -13,8 +13,9 @@ import { ResonanceAudio } from "resonance-audio";
 })
 @Injectable()
 export class LoginPage {
-  email: string = "";
-  password: string = "";
+  // TODO remove credentials
+  email: string = "tsk.nakamura@gmail.com";
+  password: string = "password";
   len: number = 0.0;
   breadth: number = 0.0;
   height: number = 0.0;
