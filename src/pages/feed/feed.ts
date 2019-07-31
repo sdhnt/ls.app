@@ -40,7 +40,8 @@ export class FeedPage {
   retrieved_images: string[] = [];
   retrieved_image: string;
   all_locations: any;
-  uid: string;
+  // TODO remove hard coded lscr doc id
+  uid: string = "zxQYBGKOjcz7OX8ZehNM";
   endDate: string;
   location: number;
   today: string = new Date().toISOString(); // minimum date = current date
